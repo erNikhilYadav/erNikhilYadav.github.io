@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<!-- 'unsafe-inline' styles: the doodles use inline style="--x:..." attributes -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nikhil Yadav, Android engineer</title>
+<meta name="description" content="What's inside an app? Open one up with Nikhil Yadav, an Android engineer who builds the insides of mobile apps.">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- wobbly pencil filter for the drawing -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="pencil"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="3"/></filter>
+</svg>
+
+<canvas class="trail" id="trail" aria-hidden="true"></canvas>
+
+<!-- sketches floating on the paper -->
+<div class="doodles" aria-hidden="true">
+  <span style="--x:6%;--y:12%;--z:1;--d:14s">{ }</span>
+  <span style="--x:44%;--y:8%;--z:.6;--d:18s">fun main()</span>
+  <span style="--x:88%;--y:22%;--z:1.4;--d:16s">&lt;/&gt;</span>
+  <span style="--x:12%;--y:78%;--z:.8;--d:20s">suspend</span>
+  <span style="--x:52%;--y:88%;--z:1.2;--d:15s">01101</span>
+  <span style="--x:80%;--y:70%;--z:.7;--d:19s">@Composable</span>
+  <span style="--x:30%;--y:45%;--z:.5;--d:22s">val x = 42</span>
+  <svg style="--x:70%;--y:40%;--z:1.1;--d:17s" viewBox="0 0 40 30"><path d="M8 24a7 7 0 0 1 1-14 10 10 0 0 1 19-2 8 8 0 0 1 4 16z"/></svg>
+  <svg style="--x:24%;--y:26%;--z:1.3;--d:13s" viewBox="0 0 40 30"><path d="M20 26v0M13 19a10 10 0 0 1 14 0M7 13a18 18 0 0 1 26 0M2 7a25 25 0 0 1 36 0"/></svg>
+  <svg style="--x:92%;--y:90%;--z:.9;--d:21s" viewBox="0 0 40 30"><rect x="4" y="8" width="28" height="14" rx="3"/><path d="M34 12v6M8 12v6M12 12v6"/></svg>
+  <svg style="--x:62%;--y:58%;--z:.6;--d:18s" viewBox="0 0 40 40"><path d="M20 4l4 11h12l-10 7 4 12-10-7-10 7 4-12L4 15h12z"/></svg>
+</div>
+
+<!-- bugs escape from the phone and crawl around the first screen -->
+<div class="bugs" id="bugs" aria-hidden="true"></div>
+
+<button class="lights" id="lights" type="button" aria-pressed="false">turn the lights off</button>
+
+
+
+<main class="explore">
+  <!-- the drawing that stays put while you scroll -->
+  <div class="stage">
+    <svg class="notes" viewBox="0 0 520 560" aria-hidden="true">
+      <text x="160" y="32">what's in here??</text>
+      <path class="draw" pathLength="1" d="M330 30c30 6 40 30 20 62m0-16-0 16 14-8"/>
+      <text x="390" y="530">tilt me</text>
+      <path class="draw" pathLength="1" d="M410 505c-8-26-26-40-50-48m15-7-15 7 11 12"/>
+      <path class="draw" pathLength="1" d="M352 12c-70-12-210-6-208 12 2 22 200 24 212 6 6-12-50-22-90-20"/>
+    </svg>
+    <div class="phone" id="phone" aria-hidden="true">
+      <div class="layer l-armor" data-layer="armor"><b class="badge">6</b><span class="cam"></span></div>
+      <div class="layer l-radio" data-layer="radio"><b class="badge">5</b><svg viewBox="0 0 100 200"><path d="M50 120a10 10 0 0 1 0-20M50 135a25 25 0 0 1 0-50M50 150a40 40 0 0 1 0-80M50 110a10 10 0 0 0 0 0" /><path d="M50 120a10 10 0 0 0 0-20M50 135a25 25 0 0 0 0-50M50 150a40 40 0 0 0 0-80" transform="translate(100 0) scale(-1 1)"/><circle cx="50" cy="110" r="3"/></svg></div>
+      <div class="layer l-memory" data-layer="memory"><b class="badge">4</b><div class="cells"></div></div>
+      <div class="layer l-brain" data-layer="brain"><b class="badge">3</b><svg viewBox="0 0 100 200"><rect x="30" y="80" width="40" height="40" rx="3"/><path d="M30 90H12V40M30 110H18v60M70 90h18V30M70 110h12v70M42 80V50M58 120v40M42 120v25M58 80V60"/></svg></div>
+      <div class="layer l-pixels" data-layer="pixels"><b class="badge">2</b><i class="bar"></i><i class="card"></i><i class="card"></i><i class="card short"></i><i class="btn"></i></div>
+      <div class="layer l-glass" data-layer="glass"><b class="badge">1</b><i class="glare"></i><i class="finger"></i></div>
+    </div>
+    <ol class="parts" aria-label="Layers of the phone">
+      <li data-layer="glass"><a href="#layer-glass"><span>1</span>Glass <em>touch</em></a></li>
+      <li data-layer="pixels"><a href="#layer-pixels"><span>2</span>Pixels <em>UI</em></a></li>
+      <li data-layer="brain"><a href="#layer-brain"><span>3</span>Brain <em>logic</em></a></li>
+      <li data-layer="memory"><a href="#layer-memory"><span>4</span>Memory <em>offline data</em></a></li>
+      <li data-layer="radio"><a href="#layer-radio"><span>5</span>Radio <em>network</em></a></li>
+      <li data-layer="armor"><a href="#layer-armor"><span>6</span>Armor <em>quality</em></a></li>
+    </ol>
+  </div>
+
+  <div class="chapters">
+
+    <section class="chapter hero" data-layer="none">
+      <div class="hero-text">
+        <p class="scribble">hi, I'm Nikhil 👋</p>
+        <h1>Ever wondered what's inside an app?</h1>
+        <p class="lede">I'm an Android engineer. For six years I've built the insides of apps that more than 10 million people tap on. Let's open one up and see how it works.</p>
+        <a class="scroll-cue" href="#layer-glass">Open the phone ↓</a>
+        <p class="bug-count" id="bugCount" aria-live="polite">5 bugs just escaped from the phone. Catch them with your pencil.</p>
+      </div>
+    </section>
+
+    <section class="chapter" id="layer-glass" data-layer="glass">
+      <span class="big-num" aria-hidden="true">1</span>
+      <p class="scribble">layer 1 of 6: the glass</p>
+      <h2>How does it know where I touched?</h2>
+      <svg class="underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 11C70 4 170 3 297 8"/></svg>
+      <p>The glass feels your finger and tells the app exactly where it landed. The app then has a few milliseconds to answer, so it feels instant. Making that answer smooth, clear and easy for everyone to use is where my work starts.</p>
+      <ul class="stickers" aria-label="Skills for this layer"><li>Material Design</li><li>Gestures</li><li>Animations</li><li>Accessibility</li><li>Product analytics</li></ul>
+      <div class="demo">
+        <p class="card-title">try it yourself</p>
+        <div class="touchpad" id="touchpad" tabindex="0" role="button" aria-label="Tap anywhere in this box"><span id="touchout">tap anywhere in here</span></div>
+      </div>
+      <aside class="field-note">
+        <p class="fn-title">where I used this</p>
+        <p>I led the revamp of Krish-e, Mahindra's farming app with 1M+ downloads, to make every screen simpler for farmers. Then I added analytics on the key flows, so the team could see exactly where people gave up.</p>
+      </aside>
+    </section>
+
+    <section class="chapter" id="layer-pixels" data-layer="pixels">
+      <span class="big-num" aria-hidden="true">2</span>
+      <p class="scribble">layer 2 of 6: the pixels</p>
+      <h2>Who draws the buttons?</h2>
+      <svg class="underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 9C80 13 190 3 297 7"/></svg>
+      <p>Code does. I write a short description of the screen, and when something changes, only that part gets redrawn. The same description can draw the app on Android and on iPhone.</p>
+      <ul class="stickers" aria-label="Skills for this layer"><li>Jetpack Compose</li><li>Flutter</li><li>Kotlin Multiplatform</li><li>Design systems</li><li>Wear OS</li></ul>
+      <div class="demo compose">
+        <p class="card-title">try it yourself</p>
+        <button type="button" class="ink-btn" id="countBtn">Book a seat</button>
+        <pre><code><span class="c">// the screen redraws when this changes</span>
+var seats by remember { mutableStateOf(<b id="countVal">0</b>) }
+
+Button(onClick = { seats++ }) {
+    Text("Book a seat")
+}</code></pre>
+        <p class="note" id="recompose" hidden>redrawn just the number ✓</p>
+      </div>
+      <aside class="field-note">
+        <p class="fn-title">where I used this</p>
+        <p>At Carnot I built a shared UI component kit that every Android app in the company adopted, so nobody rebuilt the same button twice. When we needed an iPhone app, I learned Flutter from scratch and shipped it to the App Store in a month.</p>
+      </aside>
+    </section>
+
+    <section class="chapter" id="layer-brain" data-layer="brain">
+      <span class="big-num" aria-hidden="true">3</span>
+      <p class="scribble">layer 3 of 6: the brain</p>
+      <h2>How does it do many things at once?</h2>
+      <svg class="underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 12C90 5 200 6 297 10"/></svg>
+      <p>When you open an app it needs your profile, your tickets and the map, all at once. Instead of fetching them one after another, the brain sends helpers out together, so you wait less. Keeping that brain tidy is what lets a team keep adding features without breaking old ones.</p>
+      <ul class="stickers" aria-label="Skills for this layer"><li>Coroutines &amp; Flow</li><li>ViewModel</li><li>MVVM / MVI</li><li>Clean Architecture</li><li>Hilt &amp; Koin</li><li>Modularization</li></ul>
+      <div class="demo">
+        <p class="card-title">try it yourself</p>
+        <div class="race">
+          <div class="race-row"><span>profile</span><i data-ms="900"></i></div>
+          <div class="race-row"><span>tickets</span><i data-ms="1400"></i></div>
+          <div class="race-row"><span>map</span><i data-ms="700"></i></div>
+        </div>
+        <div class="demo-actions">
+          <button type="button" class="ink-btn" data-race="serial">One by one</button>
+          <button type="button" class="ink-btn" data-race="parallel">All at once</button>
+        </div>
+        <p class="note" id="raceOut" aria-live="polite">pick one and watch</p>
+      </div>
+      <aside class="field-note">
+        <p class="fn-title">where I used this</p>
+        <p>At Ezyloads I moved a fragile logistics app to MVVM, cleared its release blockers and got it to production, with fewer regressions after. At Carnot I set up mock servers so Android work never sat waiting for the backend.</p>
+      </aside>
+    </section>
+
+    <section class="chapter" id="layer-memory" data-layer="memory">
+      <span class="big-num" aria-hidden="true">4</span>
+      <p class="scribble">layer 4 of 6: the memory</p>
+      <h2>What happens when the internet goes away?</h2>
+      <svg class="underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 8C60 12 210 4 297 9"/></svg>
+      <p>Most apps freeze. Mine write everything down on the phone first, then quietly send it when the signal comes back. Bus conductors print tickets all day like this, even on roads with no network.</p>
+      <ul class="stickers" aria-label="Skills for this layer"><li>Offline-first</li><li>Room &amp; SQLite</li><li>WorkManager</li><li>Sync &amp; conflict handling</li></ul>
+      <div class="demo">
+        <p class="card-title">try it yourself</p>
+        <div class="demo-actions">
+          <button type="button" class="ink-btn" id="wifiBtn" aria-pressed="true">📶 Internet: on</button>
+          <button type="button" class="ink-btn" id="ticketBtn">Print a ticket</button>
+        </div>
+        <ul class="queue" id="queue" aria-live="polite"></ul>
+      </div>
+      <aside class="field-note">
+        <p class="fn-title">where I used this</p>
+        <p>At ixigo I rebuilt the offline sync engine for bus ticket machines, which ended data conflicts on patchy networks. I also built the ticketing system for Tirumala Tirupati Devasthanams from scratch: booking, payment and offline ticket printing.</p>
+      </aside>
+    </section>
+
+    <section class="chapter" id="layer-radio" data-layer="radio">
+      <span class="big-num" aria-hidden="true">5</span>
+      <p class="scribble">layer 5 of 6: the radio</p>
+      <h2>How do phones talk to each other?</h2>
+      <svg class="underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 10C100 4 180 12 297 6"/></svg>
+      <p>Usually through the internet, via a server far away. But two phones can also whisper to each other directly over Wi-Fi, with no internet at all. The radio also carries your payments and your location on the map.</p>
+      <ul class="stickers" aria-label="Skills for this layer"><li>Retrofit &amp; Ktor</li><li>Wi-Fi Direct P2P</li><li>UPI &amp; card payments</li><li>Google Maps</li><li>HERE Maps</li><li>POS hardware</li></ul>
+      <div class="demo">
+        <p class="card-title">try it yourself</p>
+        <div class="p2p" id="p2p">
+          <span class="mini">📱</span>
+          <span class="wire"><i class="packet" id="packet">₹120</i></span>
+          <span class="mini">📱</span>
+        </div>
+        <div class="demo-actions"><button type="button" class="ink-btn" id="sendBtn">Send a ticket across</button></div>
+        <p class="note" id="sendOut" aria-live="polite">no internet needed</p>
+      </div>
+      <aside class="field-note">
+        <p class="fn-title">where I used this</p>
+        <p>I built a Wi-Fi Direct link so ticket machines can share data with no internet, and added UPI and card payments to checkout. Before that, I built live fleet tracking for trucks and route tools for Jaipur's garbage collection crews.</p>
+      </aside>
+    </section>
+
+    <section class="chapter" id="layer-armor" data-layer="armor">
+      <span class="big-num" aria-hidden="true">6</span>
+      <p class="scribble">layer 6 of 6: the armor</p>
+      <h2>Why doesn't it break?</h2>
+      <svg class="underline" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M3 9C70 5 160 13 297 8"/></svg>
+      <p>Before anyone uses my apps, robots test them over and over. Security experts try to break in. When something does go wrong out in the world, the app tells me straight away, so I can fix it before most people notice.</p>
+      <ul class="stickers" aria-label="Skills for this layer"><li>JUnit</li><li>Espresso</li><li>MockK</li><li>Crashlytics</li><li>VAPT security</li><li>GitHub Actions</li><li>Fastlane</li></ul>
+      <div class="demo armor-demo">
+        <p class="card-title">try to break it</p>
+        <div class="tiny-phone" id="tinyPhone">still alive 😎</div>
+        <div class="demo-actions">
+          <button type="button" class="ink-btn" data-break="shake">Shake it</button>
+          <button type="button" class="ink-btn" data-break="spin">Rotate it</button>
+          <button type="button" class="ink-btn" data-break="squash">Squash it</button>
+        </div>
+        <p class="note" id="survived" aria-live="polite">it won't crash</p>
+      </div>
+      <aside class="field-note">
+        <p class="fn-title">where I used this</p>
+        <p>I took the ixigo bus app to a 99.95% crash-free rate. At two companies I took apps through VAPT security certification, which state transport and enterprise clients require before going live.</p>
+      </aside>
+    </section>
+
+  </div>
+</main>
+
+<section class="page" id="numbers">
+  <p class="scribble">the scoreboard</p>
+  <h2>Numbers I'm proud of</h2>
+  <ul class="scores">
+    <li><b>10M+</b><span>downloads across the 5+ apps I've shipped on the Play Store and App Store</span></li>
+    <li><b>99.95%</b><span>of people used the ixigo bus app without a single crash</span></li>
+    <li><b>4</b><span>state transport bus pass products launched end to end at ixigo</span></li>
+    <li><b>1 month</b><span>to learn Flutter and ship an app to the App Store</span></li>
+    <li><b>2</b><span>companies whose apps I took through VAPT security certification</span></li>
+    <li><b>6+ years</b><span>building Android apps, across 4 companies in 4 cities</span></li>
+  </ul>
+</section>
+
+<section class="page" id="rules">
+  <p class="scribble">how I work</p>
+  <h2>Rules I build by</h2>
+  <ul class="rules">
+    <li><b>No signal is normal.</b> I design for bad networks first, because that's where real people use apps: on buses, in fields, in basements.</li>
+    <li><b>Don't wait, unblock.</b> If the backend isn't ready, I mock it and keep shipping.</li>
+    <li><b>Go and see.</b> I've worked on site with enterprise clients like Nippon and Easybox to find the real problem before writing code.</li>
+    <li><b>Build it once.</b> A shared component beats ten copies of the same button.</li>
+    <li><b>Measure, then fix.</b> Crash reports and funnels tell me where to look. Guessing doesn't.</li>
+    <li><b>Leave it better.</b> Every codebase I join gets cleaner architecture, more modules and more tests than it had.</li>
+  </ul>
+</section>
+
+<section class="page" id="hire">
+  <p class="scribble">for hiring managers</p>
+  <h2>What I can do for your team</h2>
+  <div class="offers">
+    <article><h3>Take an app from zero to the store</h3><p>I've built apps from a blank project to production more than once: ticketing for TTD, a dealer platform for Tractor World, an HR app for WeVOIS.</p></article>
+    <article><h3>Make it work offline</h3><p>Local-first data, background sync and conflict handling, built for places where the signal keeps dropping.</p></article>
+    <article><h3>Get it through security review</h3><p>I know what VAPT auditors look for and how to fix what they find.</p></article>
+    <article><h3>Ship on Android and iOS</h3><p>Native Kotlin and Jetpack Compose first, plus Flutter and Kotlin Multiplatform when one codebase makes more sense.</p></article>
+    <article><h3>Own releases and lead</h3><p>I've led Android developers, run code reviews, owned Play Store releases and mentored the developers on my team.</p></article>
+    <article><h3>Connect to the real world</h3><p>POS terminals, printers, payments, maps and live GPS. Apps that touch hardware and money.</p></article>
+  </div>
+</section>
+
+<section class="page" id="route">
+  <p class="scribble">where I've been</p>
+  <h2>Four cities, four kinds of vehicles</h2>
+  <ol class="route">
+    <li><span class="when">2020–2021</span><span class="city">Jaipur</span><span class="what">Android Engineer at WeVOIS. Apps for garbage collection trucks and the crews who drive them.</span></li>
+    <li><span class="when">2022</span><span class="city">Bangalore</span><span class="what">Senior Android Engineer at Ezyloads. Live tracking for logistics trucks.</span></li>
+    <li><span class="when">2022–2024</span><span class="city">Mumbai</span><span class="what">Senior Android Engineer at Carnot (Mahindra group). Apps for farmers, tractors and tractor dealers.</span></li>
+    <li><span class="when">2024–now</span><span class="city">Hyderabad</span><span class="what">Software Engineer II at ixigo. Bus tickets and passes for state transport.</span></li>
+  </ol>
+</section>
+
+<footer class="close">
+  <div class="letter">
+    <p class="scribble">last page of the notebook</p>
+    <h2>Got an app that needs its insides built?</h2>
+    <p class="lede">I'm Nikhil, an Android engineer in Hyderabad. If you're hiring, building something people carry in their pocket, or just want to talk about Android, write to me.</p>
+    <ul class="contact">
+      <li><a class="mail" data-user="work.nikhily" data-host="gmail.com">work.nikhily at gmail.com</a></li>
+      <li><a href="https://www.linkedin.com/in/nikhil-yadav-142471140/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="https://specimen.notion.site/Nikhil-Yadav-fe6fab8cbf534524a8f99829cc70ea53" target="_blank" rel="noopener">Full résumé</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

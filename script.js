@@ -9,7 +9,8 @@ mail.textContent = `${mail.dataset.user}@${mail.dataset.host}`;
 
 // Lights: paper by day, blueprint by night
 const lights = $('#lights');
-const isDark = () => root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+// paper by default, even when the phone is in dark mode
+const isDark = () => root.dataset.theme === 'dark';
 const paintLights = () => {
   lights.textContent = isDark() ? 'turn the lights on' : 'turn the lights off';
   lights.setAttribute('aria-pressed', String(isDark()));
